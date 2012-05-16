@@ -2,33 +2,23 @@ var activityWindow = Ti.UI.currentWindow,
 		Config = activityWindow.Config,
 		Geoloqi = activityWindow.Geoloqi;
 
-url = "../../activity-feed/index.html#/" + Geoloqi.session.getAccessToken();
-
-Ti.API.info(url);
-
+access_token = (Geoloqi.session) ? Geoloqi.session.getAccessToken() : null;
+var url = "../webviews/activity.html#/" + access_token;
 var webview = Titanium.UI.createWebView({
-  url: url
+	url: url,
+	backgroundColor:'transparent'
 });
+activityWindow.add(webview);	
 
 if(Ti.Platform.osname === "iphone"){
 	var refresh = Ti.UI.createButton({
 		systemButton: Ti.UI.iPhone.SystemButton.REFRESH
 	});
 
-	var loading = Ti.UI.createButton({
-		systemButton: Ti.UI.iPhone.SystemButton.ACTIVITY
-	});
-
-	webview.addEventListener("load", function(){
-		activityWindow.setLeftNavButton(null);
-	});
-
 	refresh.addEventListener("click", function(e){
-		activityWindow.setLeftNavButton(loading);
-		webview.reload();
+		webview.evalJS("window.location.reload();");
 	});
-
-	activityWindow.setLeftNavButton(loading);
+	
 	activityWindow.setRightNavButton(refresh);
 }
-Titanium.UI.currentWindow.add(webview);
+
