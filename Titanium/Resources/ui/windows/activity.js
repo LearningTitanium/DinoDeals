@@ -2,15 +2,15 @@ var activityWindow = Ti.UI.currentWindow,
 		Config = activityWindow.Config,
 		Geoloqi = activityWindow.Geoloqi;
 
-//access_token = (Geoloqi.session) ? Geoloqi.session.getAccessToken() : null;
-//var url = "../webviews/activity.html#/" + access_token;
+// Create a webview for the deals tab
 var url = "../webviews/activity.html#/";
 var webview = Titanium.UI.createWebView({
 	url: url,
 	backgroundColor:'transparent'
 });
-activityWindow.add(webview);	
+activityWindow.add(webview);
 
+// Platform specific refresh button
 if(Ti.Platform.osname === "iphone"){
 	var refresh = Ti.UI.createButton({
 		systemButton: Ti.UI.iPhone.SystemButton.REFRESH
@@ -25,11 +25,11 @@ if(Ti.Platform.osname === "iphone"){
 	var activity = activityWindow.activity;
 
 	activity.onCreateOptionsMenu = function(e){
-  	var menu = e.menu;
-  	var menuItem = menu.add({ title: "Refresh" });
-  	menuItem.addEventListener("click", function(e) {
-    	webview.evalJS("window.location.reload();");
-  	});
+		var menu = e.menu;
+		var menuItem = menu.add({ title: "Refresh" });
+		menuItem.addEventListener("click", function(e) {
+			webview.evalJS("window.location.reload();");
+		});
 	};
 }
 
