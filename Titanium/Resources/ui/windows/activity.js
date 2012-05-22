@@ -5,7 +5,7 @@ var activityWindow = Ti.UI.currentWindow,
 // Create a webview for the deals tab
 var token = (geoloqi.session) ? geoloqi.session.getAccessToken() : null; 
 var url = "../webviews/activity.html#/"+geoloqi.session.getAccessToken();
-
+Ti.API.info(url);
 var webview = Titanium.UI.createWebView({
 	url: url,
 	backgroundColor:'transparent'
